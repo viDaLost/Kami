@@ -10,16 +10,15 @@
 
   <style>
     :root {
+      /* цвет подобран под фон картинки, использован везде, чтобы переход был незаметен */
       --bg: #f7efe4;
       --accent: #b02f35;
-      --accent-soft: #d86a72;
       --accent-dark: #8d252a;
       --text-main: #2d1b1b;
       --text-soft: #5c4a4a;
       --card-shadow: 0 18px 45px rgba(0,0,0,.12);
       --radius-card: 26px;
       --transition: .25s ease;
-      --scroll-pos: 0%;
     }
 
     * {
@@ -42,70 +41,34 @@
     .invite {
       max-width: 520px;
       width: 100%;
-      background: #fffaf2;
+      background: var(--bg); /* тот же фон, что и у картинки */
       border-radius: var(--radius-card);
       box-shadow: var(--card-shadow);
-      padding: clamp(24px, 4vw, 32px);
+      padding: 0 0 clamp(24px, 4vw, 32px);
       position: relative;
       overflow: hidden;
     }
 
-    /* Большая 20 с переливом */
-    .top-number {
-      text-align: center;
-      font-family: "Playfair Display", serif;
-      font-size: clamp(72px, 16vw, 110px);
-      letter-spacing: .16em;
-      margin-bottom: 6px;
-      background-image: linear-gradient(120deg, var(--accent), #f3c5ca, var(--accent-dark));
-      background-size: 220% auto;
-      background-position: var(--scroll-pos) center;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .intro-text {
-      text-align: center;
-      line-height: 1.7;
-      font-size: 15px;
-      color: var(--text-soft);
-      margin-bottom: 8px;
-      font-style: italic;
-    }
-
-    .top-years {
-      text-align: center;
-      font-family: "Italiana", "Playfair Display", serif;
-      font-size: clamp(34px, 7vw, 44px);
-      letter-spacing: .04em;
-      color: var(--accent);
-      margin-top: 4px;
-      margin-bottom: 4px; /* было 10px — уменьшил, чтобы ближе к банту */
-    }
-
-    /* Контейнер под SVG-бант */
-    .bow-wrapper {
-      margin: 8px auto 18px; /* раньше 20px сверху — уменьшил пустоту */
-      width: min(260px, 70vw);
-      filter: drop-shadow(0 14px 22px rgba(0,0,0,.25));
-      animation: bowFloat 4.5s ease-in-out infinite;
-    }
-
-    .bow-wrapper svg {
+    /* Блок с картинкой-шапкой */
+    .hero-image {
       width: 100%;
-      height: auto;
       display: block;
     }
 
-    @keyframes bowFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-6px) rotate(-1.2deg); }
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* без скруглений, фон картинки и контейнера одинаковый по цвету */
+    }
+
+    .content {
+      padding: clamp(18px, 4vw, 26px) clamp(18px, 4vw, 32px) 0;
     }
 
     .main-line {
       text-align: center;
-      margin-top: 8px;
+      margin-top: 4px;
       margin-bottom: 18px;
       font-size: 16px;
       font-weight: 500;
@@ -192,7 +155,7 @@
       z-index: 1;
     }
 
-    /* Силуэт сердца вокруг числа */
+    /* сердце вокруг даты */
     .calendar-day--event::before {
       content: "";
       position: absolute;
@@ -381,238 +344,125 @@
 </head>
 <body>
   <main class="invite">
-    <div class="top-number">20</div>
-
-    <div class="intro-text">
-      Двадцать.<br>
-      Это не просто цифра.<br>
-      Это — целая история.<br>
-      И самая яркая её глава только начинается.
+    <!-- ТВОЯ КАРТИНКА-ШАПКА -->
+    <!-- подставь свой файл вместо top-invite.jpg -->
+    <div class="hero-image">
+      <img src="top-invite.jpg" alt="20 years invitation">
     </div>
 
-    <div class="top-years">years</div>
+    <div class="content">
+      <p class="main-line">Приглашаю тебя разделить мой вечер.</p>
 
-    <!-- SVG-бант -->
-    <div class="bow-wrapper" aria-hidden="true">
-      <svg viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="watercolorNoise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"/>
-            <feColorMatrix type="matrix"
-              values="1 0 0 0 0
-                      0 1 0 0 0
-                      0 0 1 0 0
-                      0 0 0 0.1 0"
-              in="noise" result="coloredNoise"/>
-            <feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite"/>
-            <feBlend mode="multiply" in="composite" in2="SourceGraphic"/>
-          </filter>
+      <p class="details">
+        <strong>18.12.2025</strong><br>
+        Город / место мероприятия<br>
+        Начало в <strong>18:00</strong>
+      </p>
 
-          <linearGradient id="gradTailLeft" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#3e0a0a" />
-            <stop offset="40%" stop-color="#8a1c1c" />
-            <stop offset="100%" stop-color="#b82e2e" />
-          </linearGradient>
+      <div class="divider"></div>
 
-          <linearGradient id="gradTailRight" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#3e0a0a" />
-            <stop offset="40%" stop-color="#8a1c1c" />
-            <stop offset="100%" stop-color="#b82e2e" />
-          </linearGradient>
+      <!-- Календарь -->
+      <section class="calendar-section" id="calendar">
+        <div class="calendar-title">Календарь</div>
+        <div class="calendar-month">Декабрь 2025</div>
 
-          <radialGradient id="gradLoopLeft" cx="30%" cy="30%" r="90%">
-            <stop offset="0%" stop-color="#d64545" />
-            <stop offset="50%" stop-color="#9e2222" />
-            <stop offset="100%" stop-color="#3b0808" />
-          </radialGradient>
+        <div class="calendar-card">
+          <div class="calendar-grid-header">
+            <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+          </div>
+          <div class="calendar-grid">
+            <!-- Декабрь 2025 начинается с понедельника -->
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
 
-          <radialGradient id="gradLoopRight" cx="70%" cy="30%" r="90%">
-            <stop offset="0%" stop-color="#d64545" />
-            <stop offset="50%" stop-color="#9e2222" />
-            <stop offset="100%" stop-color="#3b0808" />
-          </radialGradient>
-          
-          <linearGradient id="gradKnot" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#520e0e" />
-            <stop offset="50%" stop-color="#c93838" />
-            <stop offset="100%" stop-color="#520e0e" />
-          </linearGradient>
-          
-          <linearGradient id="innerShadow" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#2b0505" />
-            <stop offset="100%" stop-color="#7a1515" />
-          </linearGradient>
-        </defs>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
 
-        <g filter="url(#watercolorNoise)">
-          <!-- левые хвосты -->
-          <path d="M145 180 
-                   C 140 200, 110 240, 80 250 
-                   C 70 255, 60 250, 85 280 
-                   C 100 295, 120 250, 130 230 
-                   C 140 210, 150 190, 145 180 Z" 
-                fill="url(#gradTailLeft)" stroke="#300" stroke-width="0.5"/>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day calendar-day--event"><span>18</span></div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
 
-          <!-- правые хвосты -->
-          <path d="M155 180 
-                   C 160 200, 190 240, 220 250 
-                   C 230 255, 240 250, 215 280 
-                   C 200 295, 180 250, 170 230 
-                   C 160 210, 150 190, 155 180 Z" 
-                fill="url(#gradTailRight)" stroke="#300" stroke-width="0.5"/>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
 
-          <!-- внутренняя тень слева -->
-          <path d="M140 170 
-                   C 120 160, 60 150, 60 180 
-                   C 60 200, 100 210, 140 190" 
-                fill="url(#innerShadow)" />
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day">31</div>
+            <!-- Пустые ячейки для выравнивания -->
+            <div class="calendar-day calendar-day--muted"></div>
+            <div class="calendar-day calendar-day--muted"></div>
+            <div class="calendar-day calendar-day--muted"></div>
+            <div class="calendar-day calendar-day--muted"></div>
+          </div>
 
-          <!-- левая петля -->
-          <path d="M145 175 
-                   C 130 140, 50 140, 50 175 
-                   C 50 210, 110 215, 145 185 
-                   C 140 180, 145 175, 145 175 Z" 
-                fill="url(#gradLoopLeft)" stroke="#4a0a0a" stroke-width="0.5"/>
-              
-          <!-- внутренняя тень справа -->
-          <path d="M160 170 
-                   C 180 160, 240 150, 240 180 
-                   C 240 200, 200 210, 160 190" 
-                fill="url(#innerShadow)" />
+          <div class="calendar-legend">
+            <span class="calendar-legend-badge">
+              <span class="calendar-legend-dot"></span>
+              <span>День праздника</span>
+            </span>
+          </div>
+        </div>
+      </section>
 
-          <!-- правая петля -->
-          <path d="M155 175 
-                   C 170 140, 250 140, 250 175 
-                   C 250 210, 190 215, 155 185 
-                   C 160 180, 155 175, 155 175 Z" 
-                fill="url(#gradLoopRight)" stroke="#4a0a0a" stroke-width="0.5"/>
+      <h2>Подтверди своё присутствие</h2>
 
-          <!-- узел -->
-          <rect x="138" y="165" width="24" height="25" rx="8" ry="8" fill="url(#gradKnot)" />
-          
-          <!-- складки узла -->
-          <path d="M142 168 Q 150 175 142 185" stroke="#330000" stroke-width="1" fill="none" opacity="0.6"/>
-          <path d="M158 168 Q 150 175 158 185" stroke="#330000" stroke-width="1" fill="none" opacity="0.6"/>
-          <path d="M150 166 L 150 188" stroke="#330000" stroke-width="1" fill="none" opacity="0.3"/>
+      <form id="rsvpForm" novalidate>
+        <div>
+          <div class="field-label">Имя гостя *</div>
+          <input
+            type="text"
+            id="guestName"
+            name="guestName"
+            placeholder="Например: Катя"
+            autocomplete="name"
+            required
+          />
+        </div>
 
-          <!-- лёгкие блики -->
-          <path d="M60 165 Q 80 155 100 160" stroke="#ff7f7f" stroke-width="2" fill="none" opacity="0.3"/>
-          <path d="M240 165 Q 220 155 200 160" stroke="#ff7f7f" stroke-width="2" fill="none" opacity="0.3"/>
-        </g>
-      </svg>
+        <div>
+          <div class="field-label">Планируешь прийти? *</div>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="status" value="yes" required>
+              <span>Да, обязательно буду</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="status" value="no">
+              <span>К сожалению, не получится</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="status" value="maybe">
+              <span>Пока не знаю — отпишусь позже</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="btn-wrap">
+          <button type="submit">Отправить</button>
+        </div>
+
+        <div id="formMessage" class="message"></div>
+      </form>
     </div>
-
-    <p class="main-line">Приглашаю тебя разделить мой вечер.</p>
-
-    <p class="details">
-      <strong>18.12.2025</strong><br>
-      Город / место мероприятия<br>
-      Начало в <strong>18:00</strong>
-    </p>
-
-    <div class="divider"></div>
-
-    <!-- Календарь -->
-    <section class="calendar-section" id="calendar">
-      <div class="calendar-title">Календарь</div>
-      <div class="calendar-month">Декабрь 2025</div>
-
-      <div class="calendar-card">
-        <div class="calendar-grid-header">
-          <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
-        </div>
-        <div class="calendar-grid">
-          <!-- Декабрь 2025 начинается с понедельника -->
-          <div class="calendar-day">1</div>
-          <div class="calendar-day">2</div>
-          <div class="calendar-day">3</div>
-          <div class="calendar-day">4</div>
-          <div class="calendar-day">5</div>
-          <div class="calendar-day">6</div>
-          <div class="calendar-day">7</div>
-
-          <div class="calendar-day">8</div>
-          <div class="calendar-day">9</div>
-          <div class="calendar-day">10</div>
-          <div class="calendar-day">11</div>
-          <div class="calendar-day">12</div>
-          <div class="calendar-day">13</div>
-          <div class="calendar-day">14</div>
-
-          <div class="calendar-day">15</div>
-          <div class="calendar-day">16</div>
-          <div class="calendar-day">17</div>
-          <div class="calendar-day calendar-day--event"><span>18</span></div>
-          <div class="calendar-day">19</div>
-          <div class="calendar-day">20</div>
-          <div class="calendar-day">21</div>
-
-          <div class="calendar-day">22</div>
-          <div class="calendar-day">23</div>
-          <div class="calendar-day">24</div>
-          <div class="calendar-day">25</div>
-          <div class="calendar-day">26</div>
-          <div class="calendar-day">27</div>
-          <div class="calendar-day">28</div>
-
-          <div class="calendar-day">29</div>
-          <div class="calendar-day">30</div>
-          <div class="calendar-day">31</div>
-          <!-- Пустые ячейки для выравнивания -->
-          <div class="calendar-day calendar-day--muted"></div>
-          <div class="calendar-day calendar-day--muted"></div>
-          <div class="calendar-day calendar-day--muted"></div>
-          <div class="calendar-day calendar-day--muted"></div>
-        </div>
-
-        <div class="calendar-legend">
-          <span class="calendar-legend-badge">
-            <span class="calendar-legend-dot"></span>
-            <span>День праздника</span>
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <h2>Подтверди своё присутствие</h2>
-
-    <form id="rsvpForm" novalidate>
-      <div>
-        <div class="field-label">Имя гостя *</div>
-        <input
-          type="text"
-          id="guestName"
-          name="guestName"
-          placeholder="Например: Катя"
-          autocomplete="name"
-          required
-        />
-      </div>
-
-      <div>
-        <div class="field-label">Планируешь прийти? *</div>
-        <div class="options">
-          <label class="option">
-            <input type="radio" name="status" value="yes" required>
-            <span>Да, обязательно буду</span>
-          </label>
-          <label class="option">
-            <input type="radio" name="status" value="no">
-            <span>К сожалению, не получится</span>
-          </label>
-          <label class="option">
-            <input type="radio" name="status" value="maybe">
-            <span>Пока не знаю — отпишусь позже</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="btn-wrap">
-        <button type="submit">Отправить</button>
-      </div>
-
-      <div id="formMessage" class="message"></div>
-    </form>
   </main>
 
   <script>
@@ -661,17 +511,6 @@
       messageBox.textContent = text;
       messageBox.className = "message success";
     }
-
-    // Перелив цифры 20 в зависимости от прокрутки
-    function updateScrollGradient() {
-      const max = document.documentElement.scrollHeight - window.innerHeight || 1;
-      const ratio = window.scrollY / max;
-      const pos = 100 * ratio;
-      document.documentElement.style.setProperty("--scroll-pos", pos + "%");
-    }
-
-    window.addEventListener("scroll", updateScrollGradient);
-    window.addEventListener("load", updateScrollGradient);
   </script>
 </body>
 </html>
