@@ -89,10 +89,10 @@
       margin: 10px auto 32px;
     }
 
-    /* --- ОБНОВЛЕННЫЙ КАЛЕНДАРЬ --- */
+    /* --- КАЛЕНДАРЬ --- */
     .calendar-section {
       margin-bottom: 32px;
-      background: #fdf3e4; /* Оставил ваш фон плашки */
+      background: #fdf3e4;
       border-radius: 20px;
       padding: 20px;
       box-shadow: 0 10px 26px rgba(0,0,0,.08);
@@ -148,7 +148,6 @@
 
     .day.muted { color: rgba(0,0,0,0.2); }
     
-    /* СТИЛЬ СЕРДЦА (SVG) */
     .day.event {
       color: #fff;
       font-weight: 600;
@@ -159,17 +158,14 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 42px; /* Размер сердца */
+      width: 42px;
       height: 42px;
-      /* Используем SVG-сердце как фон */
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='%23B02F35' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
       z-index: -1;
-      /* Тень под сердцем */
       filter: drop-shadow(0 6px 12px rgba(176, 47, 53, 0.4));
-      /* Анимация биения */
       animation: heartBeat 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
     }
 
@@ -181,7 +177,7 @@
       70% { transform: translate(-50%, -50%) scale(1); }
     }
 
-    /* --- ОБНОВЛЕННАЯ ФОРМА --- */
+    /* --- ФОРМА --- */
     h2.rsvp-title {
       font-family: "Playfair Display", serif;
       font-size: 22px;
@@ -213,7 +209,7 @@
       transform: translateY(-2px);
     }
 
-    /* Кастомные радио-кнопки (Плитки) */
+    /* --- КАСТОМНЫЕ РАДИО-КНОПКИ (без смайликов) --- */
     .radio-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -235,46 +231,73 @@
     .radio-tile {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 16px;
+      padding: 14px 16px;
       border: 1px solid rgba(0,0,0,0.1);
-      border-radius: var(--radius-elem);
+      border-radius: 999px;
       background: #fffdf8;
       transition: var(--transition);
-      text-align: center;
+      text-align: left;
       height: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
-    .radio-icon {
-      font-size: 24px;
-      margin-bottom: 6px;
-      filter: grayscale(1);
-      transition: var(--transition);
+    .radio-label-main {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 2px;
     }
 
-    .radio-label {
-      font-size: 13px;
-      font-weight: 500;
+    .radio-label-sub {
+      font-size: 11px;
       color: var(--text-soft);
+      opacity: 0.8;
+    }
+
+    /* Ховер по плитке */
+    .radio-option:hover .radio-tile {
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
     }
 
     /* Состояние checked */
     .radio-option input:checked + .radio-tile {
-      background: #fff;
-      border-color: var(--accent);
-      box-shadow: 0 8px 20px rgba(176, 47, 53, 0.15);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-color: transparent;
+      box-shadow: 0 10px 26px rgba(176, 47, 53, 0.35);
       transform: translateY(-3px);
     }
 
-    .radio-option input:checked + .radio-tile .radio-label {
-      color: var(--accent);
-      font-weight: 600;
+    .radio-option input:checked + .radio-tile .radio-label-main,
+    .radio-option input:checked + .radio-tile .radio-label-sub {
+      color: #fff;
+      opacity: 1;
     }
 
-    .radio-option input:checked + .radio-tile .radio-icon {
-      filter: grayscale(0);
-      transform: scale(1.2);
+    /* Маленькая галочка справа у выбранного варианта */
+    .radio-option input:checked + .radio-tile::after {
+      content: "✓";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #fff;
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
     }
 
     /* Кнопка */
@@ -320,6 +343,9 @@
       body { padding: 14px; }
       .invite { min-height: 100vh; border-radius: 0; }
       .content { padding: 30px 20px 50px; }
+      .radio-tile {
+        border-radius: var(--radius-elem);
+      }
     }
   </style>
 </head>
@@ -334,7 +360,7 @@
 
       <p class="details">
         <strong>18.12.2025</strong><br>
-         Пятигорск<br>
+        Пятигорск<br>
         Начало в <strong>18:30</strong>
       </p>
 
@@ -362,7 +388,7 @@
         </div>
       </section>
 
-      <h2 class="rsvp-title"> Подтвердите присутствие </h2>
+      <h2 class="rsvp-title">Подтвердите присутствие</h2>
 
       <form id="rsvpForm" novalidate>
         <div class="form-group">
@@ -374,16 +400,16 @@
             <label class="radio-option">
               <input type="radio" name="status" value="yes" required>
               <div class="radio-tile">
-                <div class="radio-icon">🎉</div>
-                <span class="radio-label">Я буду</span>
+                <span class="radio-label-main">Я буду</span>
+                <span class="radio-label-sub">обязательно приду</span>
               </div>
             </label>
 
             <label class="radio-option">
               <input type="radio" name="status" value="no">
               <div class="radio-tile">
-                <div class="radio-icon">😔</div>
-                <span class="radio-label">Не смогу</span>
+                <span class="radio-label-main">Не смогу</span>
+                <span class="radio-label-sub">на этот раз не получится</span>
               </div>
             </label>
           </div>
@@ -477,8 +503,9 @@
     function shakeInput(input) {
       input.style.transform = "translateX(10px)";
       setTimeout(() => input.style.transform = "translateX(-10px)", 100);
-      setTimeout(() => input.style.transform = "translateX(5px)", 200);
-      setTimeout(() => input.style.transform = "translateX(0)", 300);
+      setTimeout(() => input.style.transform = "translateX(-10px)", 200);
+      setTimeout(() => input.style.transform = "translateX(5px)", 300);
+      setTimeout(() => input.style.transform = "translateX(0)", 400);
     }
 
     // Эффект конфетти
